@@ -1,46 +1,19 @@
-package com.traccy.dgmn.entity;
+package com.traccy.dgmn.model.dto;
 
-import com.traccy.dgmn.config.model.BaseEntity;
-
-import javax.persistence.*;
-
-@Entity
-@Table(name = "products")
-public class Product extends BaseEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  private long id;
-
-  @Column(name = "name")
+public class ProductInformation {
   private String name;
-
-  @Column(name = "description")
   private String description;
-
-  @Column(name = "category_id")
   private long categoryId;
-
-  @Column(name = "unit_id")
   private long unitId;
 
-  public Product() {
+  public ProductInformation() {
   }
 
-  public Product(long id, String name, String description, long categoryId, long unitId) {
-    this.id = id;
+  public ProductInformation(String name, String description, long categoryId, long unitId) {
     this.name = name;
     this.description = description;
     this.categoryId = categoryId;
     this.unitId = unitId;
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
   }
 
   public String getName() {
@@ -77,6 +50,6 @@ public class Product extends BaseEntity {
 
   @Override
   public String toString() {
-    return "Product{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", categoryId=" + categoryId + ", unitId=" + unitId + '}';
+    return "ProductInformation{" + "name='" + name + '\'' + ", description='" + description + '\'' + ", categoryId=" + categoryId + ", unitId=" + unitId + '}';
   }
 }

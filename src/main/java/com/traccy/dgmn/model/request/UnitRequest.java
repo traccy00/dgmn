@@ -1,13 +1,13 @@
 package com.traccy.dgmn.model.request;
 
-public class CategoryRequest {
+public class UnitRequest {
   private String name;
   private String description;
 
-  public CategoryRequest() {
+  public UnitRequest() {
   }
 
-  public CategoryRequest(String name, String description) {
+  public UnitRequest(String name, String description) {
     this.name = name;
     this.description = description;
   }
@@ -30,6 +30,6 @@ public class CategoryRequest {
 
   @Override
   public String toString() {
-    return "CategoryRequest{" + "name='" + name + '\'' + ", description='" + description + '\'' + '}';
+    return "UnitRequest{" + "name='" + name + '\'' + ", description='" + description + '\'' + '}';
   }
 }

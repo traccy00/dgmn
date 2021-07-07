@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UnitRepository extends JpaRepository<Unit, Long> {
   boolean existsById(long id);
+
+  Unit findByName(String name);
 }

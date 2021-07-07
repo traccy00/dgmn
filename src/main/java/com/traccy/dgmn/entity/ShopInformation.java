@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 public class ShopInformation extends BaseEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private long id;
 

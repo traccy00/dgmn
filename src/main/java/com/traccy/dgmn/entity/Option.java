@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "options")
 public class Option extends BaseEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private long id;
 

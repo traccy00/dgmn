@@ -1,35 +1,53 @@
 package com.traccy.dgmn.model.request;
 
-import com.traccy.dgmn.entity.Image;
-import com.traccy.dgmn.entity.Product;
+import com.traccy.dgmn.model.dto.ProductInformation;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
+//@ApiModel(description = "")
 public class ProductCreateRequest {
-  private Product product;
-  private List<Image> imageList;
+  //  @ApiModelProperty(notes = "")
+  private long productId;
+  private ProductInformation productInformation;
+  private List<String> imageList;
 
   public ProductCreateRequest() {
   }
 
-  public ProductCreateRequest(Product product, List<Image> imageList) {
-    this.product = product;
+  public ProductCreateRequest(long productId, ProductInformation product, List<String> imageList) {
+    this.productId = productId;
+    this.productInformation = product;
     this.imageList = imageList;
   }
 
-  public Product getProduct() {
-    return product;
+  public long getProductId() {
+    return productId;
   }
 
-  public void setProduct(Product product) {
-    this.product = product;
+  public void setProductId(long productId) {
+    this.productId = productId;
   }
 
-  public List<Image> getImageList() {
+  public ProductInformation getProductInformation() {
+    return productInformation;
+  }
+
+  public void setProductInformation(ProductInformation productInformation) {
+    this.productInformation = productInformation;
+  }
+
+  public List<String> getImageList() {
     return imageList;
   }
 
-  public void setImageList(List<Image> imageList) {
+  public void setImageList(List<String> imageList) {
     this.imageList = imageList;
+  }
+
+  @Override
+  public String toString() {
+    return "ProductCreateRequest{productInformation=" + productInformation + ", imageList=" + imageList + '}';
   }
 }
