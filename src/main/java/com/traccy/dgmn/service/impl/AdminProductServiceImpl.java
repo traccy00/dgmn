@@ -1,14 +1,16 @@
 package com.traccy.dgmn.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.traccy.dgmn.config.constant.ActivityActionConstants;
 import com.traccy.dgmn.config.constant.ResponseMessageConstants;
 import com.traccy.dgmn.entity.Product;
+import com.traccy.dgmn.entity.ShopInformation;
 import com.traccy.dgmn.exception.BusinessException;
 import com.traccy.dgmn.model.dto.ProductInformation;
 import com.traccy.dgmn.model.request.ProductCreateRequest;
+import com.traccy.dgmn.model.request.ShopInformationCreateRequest;
 import com.traccy.dgmn.service.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminProductServiceImpl implements AdminProductService {
@@ -35,6 +38,9 @@ public class AdminProductServiceImpl implements AdminProductService {
 
   @Autowired
   private ActivityService activityService;
+
+  @Autowired
+  private ShopInformationService shopInformationService;
 
   @Override
   @Transactional(rollbackOn = BusinessException.class)
@@ -82,5 +88,39 @@ public class AdminProductServiceImpl implements AdminProductService {
     activityService.logActivityData(ActivityActionConstants.CREATE_PRODUCT, beforeData,
       new ObjectMapper().writeValueAsString(product1));
     return product;
+  }
+
+  @Override
+  public void createShopInformation(ShopInformationCreateRequest request) throws Exception {
+    int countNumberOfInformation = shopInformationService.getNumberOfShop();
+    if(countNumberOfInformation == 5) {
+      throw new BusinessException(ResponseMessageConstants.SHOP_INFORMATION_QUANTITY_LIMIT);
+    }
+    if (StringUtils.isBlank(request.getName().trim()) || StringUtils.isBlank(request.getAddress().trim())) {
+      throw new BusinessException(ResponseMessageConstants.FIELD_NOT_BLANK);
+    }
+    List<String> phoneNumberList = request.getPhoneNumberList();
+    //validate field for save
+    if (phoneNumberList.isEmpty() || phoneNumberList == null) {
+      throw new BusinessException(ResponseMessageConstants.FIELD_NOT_BLANK);
+    }
+    List<String> trimmedStrings = phoneNumberList.stream().map(String::trim).collect(Collectors.toList());
+    if (trimmedStrings.contains("")) {
+      throw new BusinessException(ResponseMessageConstants.FIELD_NOT_BLANK);
+    }
+    String phoneNumberForSave = "";
+    for (String str : trimmedStrings) {
+      phoneNumberForSave += str + ", ";
+    }
+    String beforeData = new ObjectMapper().writeValueAsString(null);
+    ShopInformation shopInformation = new ShopInformation();
+    shopInformation.setName(request.getName());
+    shopInformation.setAddress(request.getAddress());
+    shopInformation.setPhoneNumber(phoneNumberForSave);
+    shopInformation.create();
+    shopInformation.setStatus(true);
+    ShopInformation shopInformationSaved = shopInformationService.saveShopInformation(shopInformation);
+    String afterData = new ObjectMapper().writeValueAsString(shopInformationSaved);
+    activityService.logActivityData(ActivityActionConstants.CREATE_SHOP_INFORMATION, beforeData, afterData);
   }
 }

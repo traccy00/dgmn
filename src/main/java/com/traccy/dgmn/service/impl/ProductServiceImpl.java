@@ -1,15 +1,13 @@
 package com.traccy.dgmn.service.impl;
 
 import com.traccy.dgmn.config.constant.ResponseMessageConstants;
-import com.traccy.dgmn.config.model.Mapper;
 import com.traccy.dgmn.entity.Product;
 import com.traccy.dgmn.exception.BusinessException;
-import com.traccy.dgmn.model.dto.ProductInformation;
 import com.traccy.dgmn.repository.ProductRepository;
 import com.traccy.dgmn.service.ProductService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -24,7 +22,11 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Product createProduct(Product product) {
+  public Product createProduct(Product product) throws BusinessException {
+    //check name of product
+    if (StringUtils.isBlank(product.getName().trim()) || product.getName() == null) {
+      throw new BusinessException(ResponseMessageConstants.PRODUCT_NAME_NOT_BLANK);
+    }
     return productRepository.save(product);
   }
 

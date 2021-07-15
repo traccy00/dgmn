@@ -29,9 +29,7 @@ public class ProductController {
   @Autowired
   private ProductService productService;
 
-  @ApiOperation(value = "Create product",
-    notes = "provide product information and list image for it",
-    response = ProductCreateRequest.class)
+  @ApiOperation(value = "Create product", notes = "provide product information and list image for it", response = ProductCreateRequest.class)
   @PostMapping("/create-product")
   ResponseData createProduct(@RequestBody ProductCreateRequest productCreateRequest) {
     try {
@@ -42,7 +40,7 @@ public class ProductController {
     } catch (BusinessException e) {
       LOGGER.error(LogUtils.printLogStackTrace(e));
       return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), e.getMessage());
-    }catch (Exception e) {
+    } catch (Exception e) {
       LOGGER.error(LogUtils.printLogStackTrace(e));
       return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.ERROR);
     }

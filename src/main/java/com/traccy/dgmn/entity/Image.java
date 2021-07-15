@@ -18,20 +18,16 @@ public class Image extends BaseEntity {
   @Column(name = "product_id")
   private long productId;
 
-  @Column(name = "evaluate_id")
-  private long evaluateId;
-
   @Column(name = "is_avatar")
   private boolean isAvatar;
 
   public Image() {
   }
 
-  public Image(long id, String name, long productId, long evaluateId, boolean isAvatar) {
+  public Image(long id, String name, long productId, boolean isAvatar) {
     this.id = id;
     this.name = name;
     this.productId = productId;
-    this.evaluateId = evaluateId;
     this.isAvatar = isAvatar;
   }
 
@@ -57,14 +53,6 @@ public class Image extends BaseEntity {
 
   public void setProductId(long productId) {
     this.productId = productId;
-  }
-
-  public long getEvaluateId() {
-    return evaluateId;
-  }
-
-  public void setEvaluateId(long evaluateId) {
-    this.evaluateId = evaluateId;
   }
 
   public boolean isAvatar() {

@@ -5,7 +5,7 @@ import com.traccy.dgmn.config.model.BaseEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "unit")
+@Table(name = "units")
 public class Unit extends BaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

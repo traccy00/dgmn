@@ -7,4 +7,7 @@ public interface ActivityActionConstants {
 
   //image
   String CREATE_IMAGE = "CREATE_IMAGE";
+
+  //shop information
+  String CREATE_SHOP_INFORMATION = "CREATE_SHOP_INFORMATION";
 }
