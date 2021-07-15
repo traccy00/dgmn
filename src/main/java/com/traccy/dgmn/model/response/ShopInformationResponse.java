@@ -1,30 +1,17 @@
-package com.traccy.dgmn.entity;
+package com.traccy.dgmn.model.response;
 
-import com.traccy.dgmn.config.model.BaseEntity;
+import java.util.List;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "shop_infors")
-public class ShopInformation extends BaseEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
+public class ShopInformationResponse {
   private long id;
-
-  @Column(name = "name")
   private String name;
-
-  @Column(name = "address")
   private String address;
+  private String[] phoneNumber;
 
-  @Column(name = "phone_number")
-  private String phoneNumber;
-
-  public ShopInformation() {
+  public ShopInformationResponse() {
   }
 
-  public ShopInformation(long id, String name, String address, String phoneNumber) {
+  public ShopInformationResponse(long id, String name, String address, String[] phoneNumber) {
     this.id = id;
     this.name = name;
     this.address = address;
@@ -55,11 +42,11 @@ public class ShopInformation extends BaseEntity {
     this.address = address;
   }
 
-  public String getPhoneNumber() {
+  public String[] getPhoneNumber() {
     return phoneNumber;
   }
 
-  public void setPhoneNumber(String phoneNumber) {
+  public void setPhoneNumber(String[] phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
 }

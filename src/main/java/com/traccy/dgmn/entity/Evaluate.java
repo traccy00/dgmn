@@ -19,8 +19,8 @@ public class Evaluate extends BaseEntity {
   @Column(name = "address")
   private String address;
 
-  @Column(name = "purchased_product")
-  private String purchasedProductName;
+  @Column(name = "product_id")
+  private long productId;
 
   @Column(name = "comment")
   private String comment;
@@ -28,11 +28,11 @@ public class Evaluate extends BaseEntity {
   public Evaluate() {
   }
 
-  public Evaluate(long id, String fullName, String address, String purchasedProductName, String comment) {
+  public Evaluate(long id, String fullName, String address, long productId, String comment) {
     this.id = id;
     this.fullName = fullName;
     this.address = address;
-    this.purchasedProductName = purchasedProductName;
+    this.productId = productId;
     this.comment = comment;
   }
 
@@ -60,12 +60,12 @@ public class Evaluate extends BaseEntity {
     this.address = address;
   }
 
-  public String getPurchasedProductName() {
-    return purchasedProductName;
+  public long getProductId() {
+    return productId;
   }
 
-  public void setPurchasedProductName(String purchasedProductName) {
-    this.purchasedProductName = purchasedProductName;
+  public void setProductId(long productId) {
+    this.productId = productId;
   }
 
   public String getComment() {
