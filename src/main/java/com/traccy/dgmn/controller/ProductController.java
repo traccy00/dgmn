@@ -7,6 +7,7 @@ import com.traccy.dgmn.entity.Product;
 import com.traccy.dgmn.exception.BusinessException;
 import com.traccy.dgmn.model.ResponseData;
 import com.traccy.dgmn.model.request.ProductCreateRequest;
+import com.traccy.dgmn.model.response.ProductDetailResponse;
 import com.traccy.dgmn.service.AdminProductService;
 import com.traccy.dgmn.service.ProductService;
 import io.swagger.annotations.ApiOperation;
@@ -49,12 +50,14 @@ public class ProductController {
     }
   }
 
-  @GetMapping("/get-list-product-by-category")
+  @GetMapping("/get-list-product-by-subcategory")
   @ApiOperation(value = "get list product by category",
-    notes = "show product in category and show all,  more to see all of product in category", response = Product.class)
-  ResponseData getListProductByCategory(@RequestParam(value = "categoryId", required = false) Long categoryId) {
+    notes = "show product in subcategory and show all in category pagination, more to see all of product in category",
+    response = Product.class)
+  ResponseData getListProductByCategory(@RequestParam(value = "parentCategoryId") long parentCategoryId,
+    @RequestParam(value = "subcategoryId", required = false) Long subcategoryId) {
     try {
-      List<Product> productList = productService.getListProductByCategoryId(categoryId);
+      List<Product> productList = productService.getListProductBySubcategoryId(parentCategoryId, subcategoryId);
       return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(), ResponseMessageConstants.SUCCESS, productList);
     } catch (Exception e) {
       LOGGER.error(LogUtils.printLogStackTrace(e));
@@ -64,10 +67,13 @@ public class ProductController {
 
   @GetMapping("/get-product-detail")
   @ApiOperation(value = "get product detail when click to product information in Home page")
-  ResponseData getProductDetail() {
+  ResponseData getProductDetail(@RequestParam(value = "productId") long productId) {
     try {
-
-      return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(), ResponseMessageConstants.SUCCESS);
+      if(productId <= 0) {
+        return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.DATA_INVALID);
+      }
+      ProductDetailResponse detailResponse = adminProductService.getProductDetail(productId);
+      return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(), ResponseMessageConstants.SUCCESS, detailResponse);
     } catch (Exception e) {
       return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.ERROR);
     }

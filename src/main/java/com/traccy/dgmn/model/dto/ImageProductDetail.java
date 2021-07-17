@@ -8,6 +8,15 @@ public class ImageProductDetail {
   private Image avatar;
   private List<Image> optionalImage;
   private List<Image> descriptionImage;
+  private Image video;
+
+  public Image getVideo() {
+    return video;
+  }
+
+  public void setVideo(Image video) {
+    this.video = video;
+  }
 
   public Image getAvatar() {
     return avatar;

@@ -7,4 +7,6 @@ public interface UnitRepository extends JpaRepository<Unit, Long> {
   boolean existsById(long id);
 
   Unit findByName(String name);
+
+  Unit findById(long id);
 }

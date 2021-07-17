@@ -12,7 +12,7 @@ public interface ProductService {
 
   Product saveProduct(Product product) throws BusinessException;
 
-  List<Product> getListProductByCategoryId(Long categoryId);
+  List<Product> getListProductBySubcategoryId(Long parentCategoryId, Long subcategoryId);
 
   Product getById(long productId);
 }

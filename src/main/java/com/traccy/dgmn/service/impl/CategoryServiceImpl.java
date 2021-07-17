@@ -8,6 +8,8 @@ import com.traccy.dgmn.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -36,6 +38,11 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public Category getCategoryById(long id) {
     return categoryRepository.findById(id);
+  }
+
+  @Override
+  public List<Long> getListIdByParentCategoryId(long parentCategoryId) {
+    return categoryRepository.getListIdByParentCategoryId(parentCategoryId);
   }
 
   @Override
