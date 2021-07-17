@@ -3,7 +3,6 @@ package com.traccy.dgmn.model.response;
 import com.traccy.dgmn.model.dto.ImageProductDetail;
 
 public class ProductDetailResponse {
-  private ImageProductDetail imageProductDetail;
   private String productName;
   //for edit
   private long categoryId;
@@ -17,14 +16,14 @@ public class ProductDetailResponse {
   private String warranty;
   private String size;
   private String shippingFee;
+  private ImageProductDetail imageProductDetail;
 
   public ProductDetailResponse() {
   }
 
-  public ProductDetailResponse(ImageProductDetail imageProductDetail, String productName, long categoryId,
+  public ProductDetailResponse(String productName, long categoryId,
     String categoryName, long unitId, String unitName, long price, String material, String stockingStatus,
-    String warranty, String size, String shippingFee) {
-    this.imageProductDetail = imageProductDetail;
+    String warranty, String size, String shippingFee, ImageProductDetail imageProductDetail) {
     this.productName = productName;
     this.categoryId = categoryId;
     this.categoryName = categoryName;
@@ -36,6 +35,7 @@ public class ProductDetailResponse {
     this.warranty = warranty;
     this.size = size;
     this.shippingFee = shippingFee;
+    this.imageProductDetail = imageProductDetail;
   }
 
   public long getPrice() {

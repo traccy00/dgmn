@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.traccy.dgmn.config.constant.ActivityActionConstants;
 import com.traccy.dgmn.config.constant.ResponseMessageConstants;
 import com.traccy.dgmn.config.enums.Enums;
-import com.traccy.dgmn.entity.Category;
-import com.traccy.dgmn.entity.Product;
-import com.traccy.dgmn.entity.ShopInformation;
-import com.traccy.dgmn.entity.Unit;
+import com.traccy.dgmn.entity.*;
 import com.traccy.dgmn.exception.BusinessException;
 import com.traccy.dgmn.model.dto.ImageProductDetail;
 import com.traccy.dgmn.model.dto.ProductInformation;
@@ -43,6 +40,9 @@ public class AdminProductServiceImpl implements AdminProductService {
 
   @Autowired
   private ActivityService activityService;
+
+  @Autowired
+  private ImageService imageService;
 
   @Autowired
   private ShopInformationService shopInformationService;
@@ -155,8 +155,11 @@ public class AdminProductServiceImpl implements AdminProductService {
   }
 
   @Override
-  public ProductDetailResponse getProductDetail(long productId) {
+  public ProductDetailResponse getProductDetail(long productId) throws BusinessException {
     Product product = productService.getById(productId);
+    if(product == null) {
+      throw new BusinessException(ResponseMessageConstants.PRODUCT_NOT_EXIST);
+    }
     ProductDetailResponse detailResponse = new ProductDetailResponse();
     detailResponse.setProductName(product.getName());
     //category
@@ -179,8 +182,11 @@ public class AdminProductServiceImpl implements AdminProductService {
     detailResponse.setSize(product.getSize());
     detailResponse.setShippingFee(product.getShippingFee());
 
-    ImageProductDetail imageProductDetail = new ImageProductDetail();
-
+    //represent in home page
+    Image avatar = imageService.getAvatarOfProduct(productId);
+    List<Image> optionalImageList = imageService.getOptionalImageList(productId);
+    ImageProductDetail imageProductDetail = new ImageProductDetail(avatar, optionalImageList);
+    detailResponse.setImageProductDetail(imageProductDetail);
     return detailResponse;
   }
 }

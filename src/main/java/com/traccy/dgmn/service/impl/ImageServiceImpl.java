@@ -7,6 +7,8 @@ import com.traccy.dgmn.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ImageServiceImpl implements ImageService {
   @Autowired
@@ -21,5 +23,15 @@ public class ImageServiceImpl implements ImageService {
     image.setStatus(true);
     image.create();
     return image;
+  }
+
+  @Override
+  public Image getAvatarOfProduct(long productId) {
+    return imageRepository.getAvatar(productId);
+  }
+
+  @Override
+  public List<Image> getOptionalImageList(long productId) {
+    return imageRepository.getOptionalImage(productId);
   }
 }
