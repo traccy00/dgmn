@@ -8,5 +8,5 @@ public interface UnitService {
 
   Unit getUnitByName(String name);
 
-  void saveUnit(Unit unit);
+  Unit saveUnit(Unit unit);
 }

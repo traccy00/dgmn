@@ -3,6 +3,8 @@ package com.traccy.dgmn.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.traccy.dgmn.config.constant.ActivityActionConstants;
 import com.traccy.dgmn.config.constant.ResponseMessageConstants;
+import com.traccy.dgmn.config.enums.Enums;
+import com.traccy.dgmn.entity.Category;
 import com.traccy.dgmn.entity.Product;
 import com.traccy.dgmn.entity.ShopInformation;
 import com.traccy.dgmn.exception.BusinessException;
@@ -67,7 +69,8 @@ public class AdminProductServiceImpl implements AdminProductService {
     }
     //check category exist
     long categoryId = productInformation.getCategoryId();
-    if (!categoryService.checkExistById(categoryId)) {
+    Category category = categoryService.getSubCategoryById(categoryId);
+    if (category == null) {
       throw new BusinessException(ResponseMessageConstants.CATEGORY_NOT_EXIST);
     }
     //check unit id exist
@@ -75,16 +78,40 @@ public class AdminProductServiceImpl implements AdminProductService {
     if (!unitService.checkExistById(unitId)) {
       throw new BusinessException(ResponseMessageConstants.UNIT_NOT_EXIST);
     }
+
     String beforeData = new ObjectMapper().writeValueAsString(null);
     Product product = new Product();
     product.setName(productInformation.getName());
     product.setDescription(productInformation.getDescription());
     product.setCategoryId(categoryId);
     product.setUnitId(unitId);
+    //price: default=0 not null
+    if (productInformation.getPrice() < 0) {
+      throw new BusinessException(ResponseMessageConstants.PRICE_GREATER_THAN_0);
+    }
+    product.setPrice(productInformation.getPrice());
+    //stocking:default:Stocking not null
+    if (productInformation.getStocking() != Enums.StockingStatus.Stocking.getStatus() && productInformation
+      .getStocking() != Enums.StockingStatus.Order.getStatus()) {
+      product.setStocking(Enums.StockingStatus.Stocking.getStatus());
+    } else {
+      product.setStocking(productInformation.getStocking());
+    }
+    //size
+    product.setSize(productInformation.getSize());
+    //warranty
+    product.setWarranty(productInformation.getWarranty());
+    //shipping fee:default:Free
+    if (productInformation.getShippingFee() != Enums.ShippingFee.Free.getStatus() && productInformation
+      .getShippingFee() != Enums.ShippingFee.Contact.getStatus()) {
+      product.setShippingFee(Enums.ShippingFee.Free.getStatus());
+    } else {
+      product.setShippingFee(productInformation.getShippingFee());
+    }
     product.setStatus(true);
     product.create();
     LOGGER.info(productInformation.toString());
-    Product product1 = productService.createProduct(product);
+    Product product1 = productService.saveProduct(product);
     activityService.logActivityData(ActivityActionConstants.CREATE_PRODUCT, beforeData,
       new ObjectMapper().writeValueAsString(product1));
     return product;
@@ -93,7 +120,7 @@ public class AdminProductServiceImpl implements AdminProductService {
   @Override
   public void createShopInformation(ShopInformationCreateRequest request) throws Exception {
     int countNumberOfInformation = shopInformationService.getNumberOfShop();
-    if(countNumberOfInformation == 5) {
+    if (countNumberOfInformation == 5) {
       throw new BusinessException(ResponseMessageConstants.SHOP_INFORMATION_QUANTITY_LIMIT);
     }
     if (StringUtils.isBlank(request.getName().trim()) || StringUtils.isBlank(request.getAddress().trim())) {

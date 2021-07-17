@@ -25,6 +25,10 @@ public class ConfigController {
   @PostMapping("/create-category")
   ResponseData createCategory(@RequestBody CategoryRequest categoryRequest) {
     try {
+      //check when user not input anything
+      if(categoryRequest == null) {
+        return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.DATA_INVALID);
+      }
       LOGGER.info("create category with: " + categoryRequest.toString());
       configService.createCategory(categoryRequest);
       return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(),
@@ -41,6 +45,10 @@ public class ConfigController {
   @PostMapping("create-unit")
   ResponseData createUnit(@RequestBody UnitRequest unitRequest) {
     try {
+      //check when user not input anything
+      if(unitRequest == null) {
+        return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.DATA_INVALID);
+      }
       LOGGER.info("create unit with: {}", unitRequest.toString());
       configService.createUnit(unitRequest);
       return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(), ResponseMessageConstants.SUCCESS);

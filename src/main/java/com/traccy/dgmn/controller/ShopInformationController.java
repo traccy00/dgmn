@@ -56,4 +56,14 @@ public class ShopInformationController {
     }
   }
 
+//  @PutMapping("/change-default-shop-information")
+//  @ApiOperation(value = "")
+//  ResponseData changeDefaultShopInformation() {
+//    try {
+//      adminProductService.changeDefaultShopInformation();
+//      return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(), ResponseMessageConstants.SUCCESS);
+//    } catch (Exception e) {
+//      return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.ERROR);
+//    }
+//  }
 }
