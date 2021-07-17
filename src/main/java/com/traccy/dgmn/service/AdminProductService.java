@@ -1,6 +1,7 @@
 package com.traccy.dgmn.service;
 
 import com.traccy.dgmn.entity.Product;
+import com.traccy.dgmn.exception.BusinessException;
 import com.traccy.dgmn.model.dto.ProductInformation;
 import com.traccy.dgmn.model.request.ProductCreateRequest;
 import com.traccy.dgmn.model.request.ShopInformationCreateRequest;
@@ -15,5 +16,5 @@ public interface AdminProductService {
 
   void createShopInformation(ShopInformationCreateRequest request) throws Exception;
 
-  ProductDetailResponse getProductDetail(long productId);
+  ProductDetailResponse getProductDetail(long productId) throws BusinessException;
 }

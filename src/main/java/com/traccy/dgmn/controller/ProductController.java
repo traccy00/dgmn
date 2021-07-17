@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.rmi.runtime.Log;
 
 import java.util.List;
 
@@ -30,7 +31,8 @@ public class ProductController {
   @Autowired
   private ProductService productService;
 
-  @ApiOperation(value = "Create product", notes = "provide product information and list image for it", response = ProductCreateRequest.class)
+  @ApiOperation(value = "Create product", notes = "provide product information and list image for it",
+    response = ProductCreateRequest.class)
   @PostMapping("/create-product")
   ResponseData createProduct(@RequestBody ProductCreateRequest productCreateRequest) {
     try {
@@ -69,12 +71,17 @@ public class ProductController {
   @ApiOperation(value = "get product detail when click to product information in Home page")
   ResponseData getProductDetail(@RequestParam(value = "productId") long productId) {
     try {
-      if(productId <= 0) {
+      if (productId <= 0) {
         return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.DATA_INVALID);
       }
       ProductDetailResponse detailResponse = adminProductService.getProductDetail(productId);
-      return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(), ResponseMessageConstants.SUCCESS, detailResponse);
+      return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(), ResponseMessageConstants.SUCCESS,
+        detailResponse);
+    } catch (BusinessException e) {
+      LOGGER.error(LogUtils.printLogStackTrace(e));
+      return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), e.getMessage());
     } catch (Exception e) {
+      LOGGER.error(LogUtils.printLogStackTrace(e));
       return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.ERROR);
     }
   }

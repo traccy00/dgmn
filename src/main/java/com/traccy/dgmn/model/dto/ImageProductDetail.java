@@ -6,17 +6,24 @@ import java.util.List;
 
 public class ImageProductDetail {
   private Image avatar;
-  private List<Image> optionalImage;
-  private List<Image> descriptionImage;
-  private Image video;
+  private List<Image> optionalImageList;
+//  private Image video;
 
-  public Image getVideo() {
-    return video;
+  public ImageProductDetail() {
   }
 
-  public void setVideo(Image video) {
-    this.video = video;
+  public ImageProductDetail(Image avatar, List<Image> optionalImageList) {
+    this.avatar = avatar;
+    this.optionalImageList = optionalImageList;
   }
+
+//  public Image getVideo() {
+//    return video;
+//  }
+//
+//  public void setVideo(Image video) {
+//    this.video = video;
+//  }
 
   public Image getAvatar() {
     return avatar;
@@ -26,19 +33,12 @@ public class ImageProductDetail {
     this.avatar = avatar;
   }
 
-  public List<Image> getOptionalImage() {
-    return optionalImage;
+  public List<Image> getOptionalImageList() {
+    return optionalImageList;
   }
 
-  public void setOptionalImage(List<Image> optionalImage) {
-    this.optionalImage = optionalImage;
+  public void setOptionalImageList(List<Image> optionalImageList) {
+    this.optionalImageList = optionalImageList;
   }
 
-  public List<Image> getDescriptionImage() {
-    return descriptionImage;
-  }
-
-  public void setDescriptionImage(List<Image> descriptionImage) {
-    this.descriptionImage = descriptionImage;
-  }
 }
