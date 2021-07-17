@@ -21,6 +21,9 @@ public class Image extends BaseEntity {
   @Column(name = "is_avatar")
   private boolean isAvatar;
 
+  @Column(name = "is_video")
+  private boolean isVideo;
+
   public Image() {
   }
 

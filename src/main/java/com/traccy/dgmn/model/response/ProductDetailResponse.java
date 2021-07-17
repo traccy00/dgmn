@@ -11,11 +11,40 @@ public class ProductDetailResponse {
   private long unitId;
   private String unitName;
 
+  private long price;
   private String material;
   private String stockingStatus;
   private String warranty;
   private String size;
   private String shippingFee;
+
+  public ProductDetailResponse() {
+  }
+
+  public ProductDetailResponse(ImageProductDetail imageProductDetail, String productName, long categoryId,
+    String categoryName, long unitId, String unitName, long price, String material, String stockingStatus,
+    String warranty, String size, String shippingFee) {
+    this.imageProductDetail = imageProductDetail;
+    this.productName = productName;
+    this.categoryId = categoryId;
+    this.categoryName = categoryName;
+    this.unitId = unitId;
+    this.unitName = unitName;
+    this.price = price;
+    this.material = material;
+    this.stockingStatus = stockingStatus;
+    this.warranty = warranty;
+    this.size = size;
+    this.shippingFee = shippingFee;
+  }
+
+  public long getPrice() {
+    return price;
+  }
+
+  public void setPrice(long price) {
+    this.price = price;
+  }
 
   public ImageProductDetail getImageProductDetail() {
     return imageProductDetail;
@@ -103,5 +132,10 @@ public class ProductDetailResponse {
 
   public void setShippingFee(String shippingFee) {
     this.shippingFee = shippingFee;
+  }
+
+  @Override
+  public String toString() {
+    return "ProductDetailResponse{" + "imageProductDetail=" + imageProductDetail + ", productName='" + productName + '\'' + ", categoryId=" + categoryId + ", categoryName='" + categoryName + '\'' + ", unitId=" + unitId + ", unitName='" + unitName + '\'' + ", material='" + material + '\'' + ", stockingStatus='" + stockingStatus + '\'' + ", warranty='" + warranty + '\'' + ", size='" + size + '\'' + ", shippingFee='" + shippingFee + '\'' + '}';
   }
 }

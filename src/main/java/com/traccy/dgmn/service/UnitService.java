@@ -9,4 +9,6 @@ public interface UnitService {
   Unit getUnitByName(String name);
 
   Unit saveUnit(Unit unit);
+
+  Unit getUnitById(long id);
 }

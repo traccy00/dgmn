@@ -27,4 +27,9 @@ public class UnitServiceImpl implements UnitService {
     Unit unit1 = unitRepository.save(unit);
     return unit1;
   }
+
+  @Override
+  public Unit getUnitById(long id) {
+    return unitRepository.findById(id);
+  }
 }

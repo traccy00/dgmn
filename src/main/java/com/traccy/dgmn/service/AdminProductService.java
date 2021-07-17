@@ -4,6 +4,7 @@ import com.traccy.dgmn.entity.Product;
 import com.traccy.dgmn.model.dto.ProductInformation;
 import com.traccy.dgmn.model.request.ProductCreateRequest;
 import com.traccy.dgmn.model.request.ShopInformationCreateRequest;
+import com.traccy.dgmn.model.response.ProductDetailResponse;
 
 public interface AdminProductService {
 
@@ -14,4 +15,5 @@ public interface AdminProductService {
 
   void createShopInformation(ShopInformationCreateRequest request) throws Exception;
 
+  ProductDetailResponse getProductDetail(long productId);
 }

@@ -7,10 +7,13 @@ import com.traccy.dgmn.config.enums.Enums;
 import com.traccy.dgmn.entity.Category;
 import com.traccy.dgmn.entity.Product;
 import com.traccy.dgmn.entity.ShopInformation;
+import com.traccy.dgmn.entity.Unit;
 import com.traccy.dgmn.exception.BusinessException;
+import com.traccy.dgmn.model.dto.ImageProductDetail;
 import com.traccy.dgmn.model.dto.ProductInformation;
 import com.traccy.dgmn.model.request.ProductCreateRequest;
 import com.traccy.dgmn.model.request.ShopInformationCreateRequest;
+import com.traccy.dgmn.model.response.ProductDetailResponse;
 import com.traccy.dgmn.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -149,5 +152,35 @@ public class AdminProductServiceImpl implements AdminProductService {
     ShopInformation shopInformationSaved = shopInformationService.saveShopInformation(shopInformation);
     String afterData = new ObjectMapper().writeValueAsString(shopInformationSaved);
     activityService.logActivityData(ActivityActionConstants.CREATE_SHOP_INFORMATION, beforeData, afterData);
+  }
+
+  @Override
+  public ProductDetailResponse getProductDetail(long productId) {
+    Product product = productService.getById(productId);
+    ProductDetailResponse detailResponse = new ProductDetailResponse();
+    detailResponse.setProductName(product.getName());
+    //category
+    long categoryId = product.getCategoryId();
+    Category category = categoryService.getCategoryById(categoryId);
+    detailResponse.setCategoryId(categoryId);
+    detailResponse.setCategoryName(category.getName());
+    //unit
+    long unitId = product.getUnitId();
+    detailResponse.setUnitId(unitId);
+    Unit unit = unitService.getUnitById(unitId);
+    detailResponse.setUnitName(unit.getName());
+    //price
+    detailResponse.setPrice(product.getPrice());
+    //material
+    detailResponse.setMaterial(product.getMaterial());
+    //stocking status
+    detailResponse.setStockingStatus(product.getStocking());
+    detailResponse.setWarranty(product.getWarranty());
+    detailResponse.setSize(product.getSize());
+    detailResponse.setShippingFee(product.getShippingFee());
+
+    ImageProductDetail imageProductDetail = new ImageProductDetail();
+
+    return detailResponse;
   }
 }

@@ -27,6 +27,9 @@ public class Product extends BaseEntity {
   @Column(name = "price")
   private long price;
 
+  @Column(name = "material")
+  private String material;
+
   @Column(name = "size")
   private String size;
 
@@ -42,18 +45,27 @@ public class Product extends BaseEntity {
   public Product() {
   }
 
-  public Product(long id, String name, String description, long categoryId, long unitId, long price, String size,
-    String warranty, String shippingFee, String stocking) {
+  public Product(long id, String name, String description, long categoryId, long unitId, long price, String material,
+    String size, String warranty, String shippingFee, String stocking) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.categoryId = categoryId;
     this.unitId = unitId;
     this.price = price;
+    this.material = material;
     this.size = size;
     this.warranty = warranty;
     this.shippingFee = shippingFee;
     this.stocking = stocking;
+  }
+
+  public String getMaterial() {
+    return material;
+  }
+
+  public void setMaterial(String material) {
+    this.material = material;
   }
 
   public long getId() {
@@ -138,6 +150,6 @@ public class Product extends BaseEntity {
 
   @Override
   public String toString() {
-    return "Product{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", categoryId=" + categoryId + ", unitId=" + unitId + ", price=" + price + ", size='" + size + '\'' + ", warranty='" + warranty + '\'' + ", shippingFee='" + shippingFee + '\'' + ", stocking='" + stocking + '\'' + '}';
+    return "Product{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", categoryId=" + categoryId + ", unitId=" + unitId + ", price=" + price + ", material='" + material + '\'' + ", size='" + size + '\'' + ", warranty='" + warranty + '\'' + ", shippingFee='" + shippingFee + '\'' + ", stocking='" + stocking + '\'' + '}';
   }
 }

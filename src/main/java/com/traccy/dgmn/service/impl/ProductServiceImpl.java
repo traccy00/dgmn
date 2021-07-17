@@ -4,6 +4,7 @@ import com.traccy.dgmn.config.constant.ResponseMessageConstants;
 import com.traccy.dgmn.entity.Product;
 import com.traccy.dgmn.exception.BusinessException;
 import com.traccy.dgmn.repository.ProductRepository;
+import com.traccy.dgmn.service.CategoryService;
 import com.traccy.dgmn.service.ProductService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,10 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
   @Autowired
-  ProductRepository productRepository;
+  private ProductRepository productRepository;
+
+  @Autowired
+  private CategoryService categoryService;
 
   @Override
   public boolean checkExistByName(String name) {
@@ -31,11 +35,12 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public List<Product> getListProductByCategoryId(Long categoryId) {
-    if(categoryId == null) {
-      return productRepository.findAll();
+  public List<Product> getListProductBySubcategoryId(Long parentCategoryId, Long subcategoryId) {
+    List<Long> listSubcategoryOfParent = categoryService.getListIdByParentCategoryId(parentCategoryId);
+    if(subcategoryId == null) {
+      return productRepository.getListProductByParentCategoryId(listSubcategoryOfParent);
     } else {
-      return productRepository.getListProductByCategoryId(categoryId);
+      return productRepository.getListProductBySubcategoryId(listSubcategoryOfParent, subcategoryId);
     }
   }
 
