@@ -4,6 +4,8 @@ public class CategoryResponse {
   private long id;
   private String name;
   private String description;
+  private boolean isSubcategory;
+  private long parentCategoryId;
   private boolean status;
   private long createdAt;
   private long updatedAt;
@@ -11,10 +13,13 @@ public class CategoryResponse {
   public CategoryResponse() {
   }
 
-  public CategoryResponse(long id, String name, String description, boolean status, long createdAt, long updatedAt) {
+  public CategoryResponse(long id, String name, String description, boolean isSubcategory, long parentCategoryId,
+    boolean status, long createdAt, long updatedAt) {
     this.id = id;
     this.name = name;
     this.description = description;
+    this.isSubcategory = isSubcategory;
+    this.parentCategoryId = parentCategoryId;
     this.status = status;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
@@ -44,6 +49,22 @@ public class CategoryResponse {
     this.description = description;
   }
 
+  public boolean isSubcategory() {
+    return isSubcategory;
+  }
+
+  public void setSubcategory(boolean subcategory) {
+    isSubcategory = subcategory;
+  }
+
+  public long getParentCategoryId() {
+    return parentCategoryId;
+  }
+
+  public void setParentCategoryId(long parentCategoryId) {
+    this.parentCategoryId = parentCategoryId;
+  }
+
   public boolean isStatus() {
     return status;
   }
@@ -64,12 +85,12 @@ public class CategoryResponse {
     return updatedAt;
   }
 
-  @Override
-  public String toString() {
-    return "CategoryResponse{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", status=" + status + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
-  }
-
   public void setUpdatedAt(long updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  @Override
+  public String toString() {
+    return "CategoryResponse{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", isSubcategory=" + isSubcategory + ", parentCategoryId=" + parentCategoryId + ", status=" + status + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
   }
 }

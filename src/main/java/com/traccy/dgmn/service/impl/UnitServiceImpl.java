@@ -23,7 +23,8 @@ public class UnitServiceImpl implements UnitService {
   }
 
   @Override
-  public void saveUnit(Unit unit) {
-    unitRepository.save(unit);
+  public Unit saveUnit(Unit unit) {
+    Unit unit1 = unitRepository.save(unit);
+    return unit1;
   }
 }

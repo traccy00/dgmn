@@ -44,7 +44,7 @@ public class ConfigServiceImpl implements ConfigService {
   private ImageRepository imageRepository;
 
   @Override
-  public CategoryResponse createCategory(CategoryRequest categoryRequest) throws BusinessException {
+  public void createCategory(CategoryRequest categoryRequest) throws Exception {
     //validate input name
     if (StringUtils.isEmpty(categoryRequest.getName().trim()) || categoryRequest.getName() == null) {
       throw new BusinessException(ResponseMessageConstants.CATEGORY_NAME_NOT_BLANK);
@@ -54,16 +54,18 @@ public class ConfigServiceImpl implements ConfigService {
     if (category != null) {
       throw new BusinessException(ResponseMessageConstants.CATEGORY_EXIST);
     }
+    String beforeData = new ObjectMapper().writeValueAsString(null);
     category = new Category();
     category.setName(categoryRequest.getName());
     category.setDescription(categoryRequest.getDescription());
+    category.setSubcategory(categoryRequest.isSubcategory());
+    category.setParentCategoryId(categoryRequest.getParentCategoryId());
     category.setStatus(true);
     category.create();
     //save category
-    categoryService.saveCategory(category);
-    CategoryResponse categoryResponse = new CategoryResponse(category.getId(), category.getName(),
-      category.getDescription(), category.isStatus(), category.getCreatedAt(), category.getUpdatedAt());
-    return categoryResponse;
+    Category categorySave = categoryService.saveCategory(category);
+    activityService.logActivityData(ActivityActionConstants.CREATE_CATEGORY, beforeData,
+      new ObjectMapper().writeValueAsString(categorySave));
   }
 
   @Override
@@ -92,20 +94,21 @@ public class ConfigServiceImpl implements ConfigService {
       if (imageInfor == null) {
         throw new BusinessException(ResponseMessageConstants.CANNOT_SAVE_IMAGE);
       }
-      imageRepository.save(imageInfor);
+      Image image = imageRepository.save(imageInfor);
       listImageSaved.add(imageInfor);
       //save log activity
       String beforeData = new ObjectMapper().writeValueAsString(null);
       activityService.logActivityData(ActivityActionConstants.CREATE_IMAGE, beforeData,
-        new ObjectMapper().writeValueAsString(imageInfor));
+        new ObjectMapper().writeValueAsString(image));
     }
   }
 
   @Override
-  public void createUnit(UnitRequest unitRequest) throws BusinessException {
-    if (StringUtils.isBlank(unitRequest.getName().trim()) || unitRequest.getName() == null) {
+  public void createUnit(UnitRequest unitRequest) throws Exception {
+    if (StringUtils.isBlank(unitRequest.getName().trim())) {
       throw new BusinessException(ResponseMessageConstants.UNIT_NAME_NOT_BLANK);
     }
+    String beforeData = new ObjectMapper().writeValueAsString(null);
     Unit unit = unitService.getUnitByName(unitRequest.getName());
     if (unit != null) {
       throw new BusinessException(ResponseMessageConstants.UNIT_EXIST);
@@ -115,6 +118,8 @@ public class ConfigServiceImpl implements ConfigService {
     unit.setDescription(unitRequest.getDescription());
     unit.setStatus(true);
     unit.create();
-    unitService.saveUnit(unit);
+    Unit unit1 = unitService.saveUnit(unit);
+    activityService
+      .logActivityData(ActivityActionConstants.CREATE_UNIT, beforeData, new ObjectMapper().writeValueAsString(unit1));
   }
 }

@@ -10,7 +10,7 @@ public interface ProductService {
 
   boolean checkExistByName(String name);
 
-  Product createProduct(Product product) throws BusinessException;
+  Product saveProduct(Product product) throws BusinessException;
 
   List<Product> getListProductByCategoryId(Long categoryId);
 

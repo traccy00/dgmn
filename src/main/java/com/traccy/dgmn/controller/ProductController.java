@@ -33,6 +33,9 @@ public class ProductController {
   @PostMapping("/create-product")
   ResponseData createProduct(@RequestBody ProductCreateRequest productCreateRequest) {
     try {
+      if (productCreateRequest == null) {
+        return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.DATA_INVALID);
+      }
       LOGGER.info("create product with {}", productCreateRequest);
       adminProductService.createProduct(productCreateRequest);
       return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(),
@@ -47,7 +50,8 @@ public class ProductController {
   }
 
   @GetMapping("/get-list-product-by-category")
-  @ApiOperation(value = "get list product by category", notes = "show product in category and show all", response = Product.class)
+  @ApiOperation(value = "get list product by category",
+    notes = "show product in category and show all,  more to see all of product in category", response = Product.class)
   ResponseData getListProductByCategory(@RequestParam(value = "categoryId", required = false) Long categoryId) {
     try {
       List<Product> productList = productService.getListProductByCategoryId(categoryId);
@@ -58,4 +62,14 @@ public class ProductController {
     }
   }
 
+  @GetMapping("/get-product-detail")
+  @ApiOperation(value = "get product detail when click to product information in Home page")
+  ResponseData getProductDetail() {
+    try {
+
+      return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(), ResponseMessageConstants.SUCCESS);
+    } catch (Exception e) {
+      return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.ERROR);
+    }
+  }
 }

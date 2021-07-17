@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Product createProduct(Product product) throws BusinessException {
+  public Product saveProduct(Product product) throws BusinessException {
     //check name of product
     if (StringUtils.isBlank(product.getName().trim()) || product.getName() == null) {
       throw new BusinessException(ResponseMessageConstants.PRODUCT_NAME_NOT_BLANK);
@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     if(categoryId == null) {
       return productRepository.findAll();
     } else {
-      return productRepository.findAllByCategoryId(categoryId);
+      return productRepository.getListProductByCategoryId(categoryId);
     }
   }
 

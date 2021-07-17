@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface ConfigService {
 
-  CategoryResponse createCategory(CategoryRequest categoryRequest) throws BusinessException;
+  void createCategory(CategoryRequest categoryRequest) throws Exception;
 
   void saveImagesOfProduct(List<String> imageList, long productId) throws Exception;
 
-  void createUnit(UnitRequest unitRequest) throws BusinessException;
+  void createUnit(UnitRequest unitRequest) throws Exception;
 }

@@ -24,15 +24,36 @@ public class Product extends BaseEntity {
   @Column(name = "unit_id")
   private long unitId;
 
+  @Column(name = "price")
+  private long price;
+
+  @Column(name = "size")
+  private String size;
+
+  @Column(name = "warranty")
+  private String warranty;
+
+  @Column(name = "shipping_fee")
+  private String shippingFee;
+
+  @Column(name = "stocking")
+  private String stocking;
+
   public Product() {
   }
 
-  public Product(long id, String name, String description, long categoryId, long unitId) {
+  public Product(long id, String name, String description, long categoryId, long unitId, long price, String size,
+    String warranty, String shippingFee, String stocking) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.categoryId = categoryId;
     this.unitId = unitId;
+    this.price = price;
+    this.size = size;
+    this.warranty = warranty;
+    this.shippingFee = shippingFee;
+    this.stocking = stocking;
   }
 
   public long getId() {
@@ -75,8 +96,48 @@ public class Product extends BaseEntity {
     this.unitId = unitId;
   }
 
+  public String getSize() {
+    return size;
+  }
+
+  public void setSize(String size) {
+    this.size = size;
+  }
+
+  public String getWarranty() {
+    return warranty;
+  }
+
+  public void setWarranty(String warranty) {
+    this.warranty = warranty;
+  }
+
+  public String getShippingFee() {
+    return shippingFee;
+  }
+
+  public void setShippingFee(String shippingFee) {
+    this.shippingFee = shippingFee;
+  }
+
+  public String getStocking() {
+    return stocking;
+  }
+
+  public void setStocking(String stocking) {
+    this.stocking = stocking;
+  }
+
+  public long getPrice() {
+    return price;
+  }
+
+  public void setPrice(long price) {
+    this.price = price;
+  }
+
   @Override
   public String toString() {
-    return "Product{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", categoryId=" + categoryId + ", unitId=" + unitId + '}';
+    return "Product{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", categoryId=" + categoryId + ", unitId=" + unitId + ", price=" + price + ", size='" + size + '\'' + ", warranty='" + warranty + '\'' + ", shippingFee='" + shippingFee + '\'' + ", stocking='" + stocking + '\'' + '}';
   }
 }
