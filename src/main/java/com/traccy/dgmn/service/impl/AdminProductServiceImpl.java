@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -188,5 +189,29 @@ public class AdminProductServiceImpl implements AdminProductService {
     ImageProductDetail imageProductDetail = new ImageProductDetail(avatar, optionalImageList);
     detailResponse.setImageProductDetail(imageProductDetail);
     return detailResponse;
+  }
+
+  @Override
+  public List<ProductDetailResponse> getTop8DiscountProduct() throws BusinessException {
+    List<ProductDetailResponse> top8 = new ArrayList<>();
+    List<Product> products = productService.getTop8DiscountProduct();
+    for(Product product : products) {
+      long productId = product.getId();
+      ProductDetailResponse detailResponse = getProductDetail(productId);
+      top8.add(detailResponse);
+    }
+    return top8;
+  }
+
+  @Override
+  public List<ProductDetailResponse> getTop8NewestProduct() throws BusinessException {
+    List<ProductDetailResponse> top8 = new ArrayList<>();
+    List<Product> products = productService.getTop8NewestProduct();
+    for(Product product : products) {
+      long productId = product.getId();
+      ProductDetailResponse detailResponse = getProductDetail(productId);
+      top8.add(detailResponse);
+    }
+    return top8;
   }
 }

@@ -85,4 +85,36 @@ public class ProductController {
       return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.ERROR);
     }
   }
+
+  @GetMapping("/get-discount-product")
+  @ApiOperation(value = "get discount product", notes = "")
+  ResponseData getTop8DiscountProduct() {
+    try {
+      List<ProductDetailResponse> discountProduct = adminProductService.getTop8DiscountProduct();
+      return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(), ResponseMessageConstants.SUCCESS,
+        discountProduct);
+    } catch (BusinessException e) {
+      LOGGER.error(LogUtils.printLogStackTrace(e));
+      return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), e.getMessage());
+    } catch (Exception e) {
+      LOGGER.error(LogUtils.printLogStackTrace(e));
+      return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.ERROR);
+    }
+  }
+
+  @GetMapping("/get-newest-product")
+  @ApiOperation(value = "get newest product", notes = "")
+  ResponseData getTop8NewestProduct() {
+    try {
+      List<ProductDetailResponse> discountProduct = adminProductService.getTop8NewestProduct();
+      return new ResponseData(Enums.ResponseStatus.SUCCESS.getStatus(), ResponseMessageConstants.SUCCESS,
+        discountProduct);
+    } catch (BusinessException e) {
+      LOGGER.error(LogUtils.printLogStackTrace(e));
+      return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), e.getMessage());
+    } catch (Exception e) {
+      LOGGER.error(LogUtils.printLogStackTrace(e));
+      return new ResponseData(Enums.ResponseStatus.ERROR.getStatus(), ResponseMessageConstants.ERROR);
+    }
+  }
 }

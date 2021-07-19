@@ -15,4 +15,8 @@ public interface ProductService {
   List<Product> getListProductBySubcategoryId(Long parentCategoryId, Long subcategoryId);
 
   Product getById(long productId);
+
+  List<Product> getTop8DiscountProduct();
+
+  List<Product> getTop8NewestProduct();
 }
