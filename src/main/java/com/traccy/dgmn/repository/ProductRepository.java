@@ -18,4 +18,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
   List<Product> getListProductByParentCategoryId(@Param("listId") List<Long> listSubcategoryOfParent);
 
   boolean existsByName(String name);
+
+  @Query(value = "select TOP(8) * from products", nativeQuery = true)
+  List<Product> getTop8DiscountProduct();
+
+  @Query(value = "select TOP(8) * from products order by created_at desc", nativeQuery = true)
+  List<Product> getTop8NewestProduct();
 }

@@ -49,4 +49,14 @@ public class ProductServiceImpl implements ProductService {
     return productRepository.findById(productId);
   }
 
+  @Override
+  public List<Product> getTop8DiscountProduct() {
+    return productRepository.getTop8DiscountProduct();
+  }
+
+  @Override
+  public List<Product> getTop8NewestProduct() {
+    return productRepository.getTop8NewestProduct();
+  }
+
 }
