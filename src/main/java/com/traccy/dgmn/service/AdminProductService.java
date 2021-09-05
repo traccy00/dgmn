@@ -6,6 +6,7 @@ import com.traccy.dgmn.model.dto.ProductInformation;
 import com.traccy.dgmn.model.request.ProductCreateRequest;
 import com.traccy.dgmn.model.request.ShopInformationCreateRequest;
 import com.traccy.dgmn.model.response.ProductDetailResponse;
+import com.traccy.dgmn.model.response.ProductResponse;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface AdminProductService {
 
   ProductDetailResponse getProductDetail(long productId) throws BusinessException;
 
-  List<ProductDetailResponse> getTop8DiscountProduct() throws BusinessException;
-
   List<ProductDetailResponse> getTop8NewestProduct() throws BusinessException;
+
+  List<ProductResponse> getListProductBySubcategoryId(long parentCategoryId, long subcategoryId);
 }

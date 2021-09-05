@@ -35,23 +35,19 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public List<Product> getListProductBySubcategoryId(Long parentCategoryId, Long subcategoryId) {
+  public List<Product> getListProductBySubcategoryId(long parentCategoryId, long subcategoryId) {
     List<Long> listSubcategoryOfParent = categoryService.getListIdByParentCategoryId(parentCategoryId);
-    if(subcategoryId == null) {
-      return productRepository.getListProductByParentCategoryId(listSubcategoryOfParent);
-    } else {
-      return productRepository.getListProductBySubcategoryId(listSubcategoryOfParent, subcategoryId);
+    //find all product
+    if(listSubcategoryOfParent.isEmpty()) {
+      return productRepository.findAllProduct();
     }
+    //find all product in parent category
+    return productRepository.getListProductBySubcategoryId(listSubcategoryOfParent, subcategoryId);
   }
 
   @Override
   public Product getById(long productId) {
     return productRepository.findById(productId);
-  }
-
-  @Override
-  public List<Product> getTop8DiscountProduct() {
-    return productRepository.getTop8DiscountProduct();
   }
 
   @Override

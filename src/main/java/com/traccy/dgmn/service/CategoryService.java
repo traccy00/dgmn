@@ -18,4 +18,8 @@ public interface CategoryService {
   List<Long> getListIdByParentCategoryId(long parentCategoryId);
 
   boolean checkExistById(long categoryId);
+
+  List<Category> getAllSubcategory();
+
+  List<Category> getAllParentcategory();
 }

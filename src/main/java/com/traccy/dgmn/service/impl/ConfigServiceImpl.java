@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.traccy.dgmn.config.constant.ActivityActionConstants;
 import com.traccy.dgmn.config.constant.ProductConstant;
 import com.traccy.dgmn.config.constant.ResponseMessageConstants;
+import com.traccy.dgmn.config.model.Mapper;
 import com.traccy.dgmn.entity.Category;
 import com.traccy.dgmn.entity.Image;
 import com.traccy.dgmn.entity.Product;
@@ -121,5 +122,27 @@ public class ConfigServiceImpl implements ConfigService {
     Unit unit1 = unitService.saveUnit(unit);
     activityService
       .logActivityData(ActivityActionConstants.CREATE_UNIT, beforeData, new ObjectMapper().writeValueAsString(unit1));
+  }
+
+  @Override
+  public List<CategoryResponse> getListAllSubcategory() {
+    List<Category> categoryList = categoryService.getAllSubcategory();
+    List<CategoryResponse> categoryResponseList = new ArrayList<>();
+    for(Category category : categoryList) {
+      CategoryResponse response = Mapper.copyFrom(category, CategoryResponse.class);
+      categoryResponseList.add(response);
+    }
+    return categoryResponseList;
+  }
+
+  @Override
+  public List<CategoryResponse> getListAllParentCategory() {
+    List<Category> categoryList = categoryService.getAllParentcategory();
+    List<CategoryResponse> categoryResponseList = new ArrayList<>();
+    for(Category category : categoryList) {
+      CategoryResponse response = Mapper.copyFrom(category, CategoryResponse.class);
+      categoryResponseList.add(response);
+    }
+    return categoryResponseList;
   }
 }

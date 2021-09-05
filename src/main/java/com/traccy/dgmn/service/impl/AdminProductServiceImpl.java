@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.traccy.dgmn.config.constant.ActivityActionConstants;
 import com.traccy.dgmn.config.constant.ResponseMessageConstants;
 import com.traccy.dgmn.config.enums.Enums;
+import com.traccy.dgmn.config.model.Mapper;
 import com.traccy.dgmn.entity.*;
 import com.traccy.dgmn.exception.BusinessException;
 import com.traccy.dgmn.model.dto.ImageProductDetail;
@@ -11,6 +12,7 @@ import com.traccy.dgmn.model.dto.ProductInformation;
 import com.traccy.dgmn.model.request.ProductCreateRequest;
 import com.traccy.dgmn.model.request.ShopInformationCreateRequest;
 import com.traccy.dgmn.model.response.ProductDetailResponse;
+import com.traccy.dgmn.model.response.ProductResponse;
 import com.traccy.dgmn.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -192,18 +194,6 @@ public class AdminProductServiceImpl implements AdminProductService {
   }
 
   @Override
-  public List<ProductDetailResponse> getTop8DiscountProduct() throws BusinessException {
-    List<ProductDetailResponse> top8 = new ArrayList<>();
-    List<Product> products = productService.getTop8DiscountProduct();
-    for(Product product : products) {
-      long productId = product.getId();
-      ProductDetailResponse detailResponse = getProductDetail(productId);
-      top8.add(detailResponse);
-    }
-    return top8;
-  }
-
-  @Override
   public List<ProductDetailResponse> getTop8NewestProduct() throws BusinessException {
     List<ProductDetailResponse> top8 = new ArrayList<>();
     List<Product> products = productService.getTop8NewestProduct();
@@ -213,5 +203,16 @@ public class AdminProductServiceImpl implements AdminProductService {
       top8.add(detailResponse);
     }
     return top8;
+  }
+
+  @Override
+  public List<ProductResponse> getListProductBySubcategoryId(long parentCategoryId, long subcategoryId) {
+    List<Product> products = productService.getListProductBySubcategoryId(parentCategoryId, subcategoryId);
+    List<ProductResponse> responseList = new ArrayList<>();
+    for(Product product : products) {
+      ProductResponse response = Mapper.copyFrom(product, ProductResponse.class);
+      responseList.add(response);
+    }
+    return responseList;
   }
 }

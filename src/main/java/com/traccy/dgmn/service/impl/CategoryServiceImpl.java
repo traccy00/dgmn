@@ -49,4 +49,14 @@ public class CategoryServiceImpl implements CategoryService {
   public boolean checkExistById(long categoryId) {
     return categoryRepository.existsById(categoryId);
   }
+
+  @Override
+  public List<Category> getAllSubcategory() {
+    return categoryRepository.getAllSubcategory();
+  }
+
+  @Override
+  public List<Category> getAllParentcategory() {
+    return categoryRepository.getAllParentCategory();
+  }
 }

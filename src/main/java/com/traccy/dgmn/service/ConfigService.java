@@ -1,8 +1,5 @@
 package com.traccy.dgmn.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.traccy.dgmn.entity.Image;
-import com.traccy.dgmn.exception.BusinessException;
 import com.traccy.dgmn.model.request.CategoryRequest;
 import com.traccy.dgmn.model.request.UnitRequest;
 import com.traccy.dgmn.model.response.CategoryResponse;
@@ -16,4 +13,8 @@ public interface ConfigService {
   void saveImagesOfProduct(List<String> imageList, long productId) throws Exception;
 
   void createUnit(UnitRequest unitRequest) throws Exception;
+
+  List<CategoryResponse> getListAllSubcategory();
+
+  List<CategoryResponse> getListAllParentCategory();
 }
